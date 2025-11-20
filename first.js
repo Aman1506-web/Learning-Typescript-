@@ -1,3 +1,5 @@
+import { getPizzaDetail } from ".";
+
 const menu = [
   { name: "Margherita", price: 8 },
   { name: "Pepproni", price: 10 },
@@ -53,3 +55,4 @@ console.log(menu)
 console.log(`cashInRegister is ${cashInRegister}`)
 console.log(`Order queue is ${orderQueue}`)
 console.log(`next order id is ${nextOrderId}`)
+console.log(getPizzaDetail("Veggie"))
