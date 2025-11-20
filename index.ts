@@ -1,3 +1,7 @@
+export {}; // Makes this file a module with its own scope
+// bcoz index.js file is also same so the duplicacy errors dont come 
+
+// custom types : start with capital letter convention
 type Pizza = {
   name: string
   price: number
@@ -6,7 +10,7 @@ type Pizza = {
 type Order = {
   id: number
   pizza: Pizza
-  status: string
+  status: "ordered" | "completed"
 }
 
 const menu = [
@@ -34,7 +38,7 @@ function placeOrder(pizzaName: string) {
 
   cashInRegister += selectedPizza?.price;
 
-  const newOrder = {
+  const newOrder: Order = {
     id: nextOrderId++,
     pizza: selectedPizza,
     status: "ordered",

@@ -12,7 +12,7 @@ type Person = {
   name: string
   age: number
   isStudent: boolean
-  address?: Address
+  address?: Address /// ? means it is optional
 }
 
 let person1: Person = {
@@ -42,5 +42,18 @@ displayInfo(person2)
 let ages = [100,101]
 ages.push()
 
-let people =  [ person1, person2]
+let people : Array<Person> =  [ person1, person2]
 console.log(people)
+
+
+// literal types: provides more precison types than string number boolean etc.
+let names: "bob" = "bob"
+let direction: "north" | "south" | "east" | "west";
+direction = "north";
+direction = "east";
+
+// literal and union types
+
+type UserRole = "guest" | "member" | "admin";
+
+let userRole : UserRole = "member"
