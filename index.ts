@@ -26,9 +26,10 @@ const menu: Pizza[] = [
   { id: nextPizzaId++, name: "Veggie", price: 9 },
 ];
 
-
-function addNewPizza(pizzaObj: Pizza): void{
-  menu.push({id:nextPizzaId++ ,...pizzaObj});
+function addNewPizza(pizzaObj: Omit<Pizza, "id">): Pizza {
+  const newPizza: Pizza = { id: nextPizzaId++, ...pizzaObj };
+  menu.push(newPizza);
+  return newPizza;
 }
 
 function placeOrder(pizzaName: string): Order | undefined {
@@ -61,20 +62,36 @@ function completeOrder(orderId: number): Order | undefined {
   return order;
 }
 
-
-export function getPizzaDetail(identifier: string | number) : Pizza | undefined{
-    if(typeof identifier === "string" ){
-      return menu.find(pizza => pizza.name.toLowerCase() === identifier.toLowerCase())
-    }else if(typeof identifier === "number") {
-      return menu.find(pizza => pizza.id === identifier)
-    }else{
-      throw new TypeError("Paramter must either be a string or a number")
-    }
+export function getPizzaDetail(identifier: string | number): Pizza | undefined {
+  if (typeof identifier === "string") {
+    return menu.find(
+      (pizza) => pizza.name.toLowerCase() === identifier.toLowerCase()
+    );
+  } else if (typeof identifier === "number") {
+    return menu.find((pizza) => pizza.id === identifier);
+  } else {
+    throw new TypeError("Paramter must either be a string or a number");
+  }
 }
+
+// Generics Type
+function addToArray<Type>(array: Type[], item: Type): Type[] {
+  array.push(item);
+  return array;
+}
+
+addToArray<Pizza>(menu, { id: nextPizzaId++, name: "Chicken tikka", price: 20 });
+// explicit type for order history so TS knows that status is a union of ordered or completed
+addToArray<Order>(orderHistory, {
+  id: nextOrderId++,
+  pizza: menu[2],
+  status: "completed",
+});
 
 addNewPizza({ name: "Chicken Bacon", price: 12 });
 addNewPizza({ name: "BBQ Chicken", price: 11 });
 addNewPizza({ name: "Spicy Sausage", price: 11 });
+addNewPizza({ name: "Cheese Corn", price: 14 });
 
 placeOrder("Chicken Bacon");
 completeOrder(1);
