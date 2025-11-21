@@ -14,22 +14,24 @@ type Order = {
   status: "ordered" | "completed";
 };
 
-const menu: Pizza[] = [
-  { id: 1, name: "Margherita", price: 8 },
-  { id: 2, name: "Pepproni", price: 10 },
-  { id: 3, name: "Hawaiian", price: 10 },
-  { id: 4, name: "Veggie", price: 9 },
-];
-
 let cashInRegister = 100;
 const orderHistory: Order[] = [];
 let nextOrderId = 1;
+let nextPizzaId = 1;
 
-function addNewPizza(pizzaObj: Pizza) {
-  menu.push(pizzaObj);
+const menu: Pizza[] = [
+  { id: nextPizzaId++, name: "Margherita", price: 8 },
+  { id: nextPizzaId++, name: "Pepproni", price: 10 },
+  { id: nextPizzaId++, name: "Hawaiian", price: 10 },
+  { id: nextPizzaId++, name: "Veggie", price: 9 },
+];
+
+
+function addNewPizza(pizzaObj: Pizza): void{
+  menu.push({id:nextPizzaId++ ,...pizzaObj});
 }
 
-function placeOrder(pizzaName: string) {
+function placeOrder(pizzaName: string): Order | undefined {
   const selectedPizza = menu.find((pizzaObj) => pizzaObj.name === pizzaName);
   if (selectedPizza === undefined) {
     console.error(`${pizzaName} doesn't exist in menu`);
@@ -49,7 +51,7 @@ function placeOrder(pizzaName: string) {
   return newOrder;
 }
 
-function completeOrder(orderId: number) {
+function completeOrder(orderId: number): Order | undefined {
   const order = orderHistory.find((order) => order.id === orderId);
   if (order === undefined) {
     console.error(`This order ${order} doesnt exist`);
@@ -70,9 +72,9 @@ export function getPizzaDetail(identifier: string | number) : Pizza | undefined{
     }
 }
 
-addNewPizza({ id: 5, name: "Chicken Bacon", price: 12 });
-addNewPizza({ id: 6, name: "BBQ Chicken", price: 11 });
-addNewPizza({ id: 7, name: "Spicy Sausage", price: 11 });
+addNewPizza({ name: "Chicken Bacon", price: 12 });
+addNewPizza({ name: "BBQ Chicken", price: 11 });
+addNewPizza({ name: "Spicy Sausage", price: 11 });
 
 placeOrder("Chicken Bacon");
 completeOrder(1);
@@ -83,10 +85,10 @@ completeOrder(1);
 // }
 
 console.log(menu);
-console.log(`cashInRegister is ${cashInRegister}`);
-// if u use `` for array or objects then there original value will not return
-console.log("Recent order history is ", orderHistory);
-console.log(`next order id is ${nextOrderId}`);
-console.log("placed order is completed", completeOrder(1));
+// console.log(`cashInRegister is ${cashInRegister}`);
+// // if u use `` for array or objects then there original value will not return
+// console.log("Recent order history is ", orderHistory);
+// console.log(`next order id is ${nextOrderId}`);
+// console.log("placed order is completed", completeOrder(1));
 
 // Command to run this code : npx tsx index.ts
